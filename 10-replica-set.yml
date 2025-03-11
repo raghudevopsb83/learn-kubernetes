@@ -19,3 +19,15 @@ spec:
       containers:
       - name: nginx
         image: nginx
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: p3
+  labels:
+    project: example
+    app: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx
