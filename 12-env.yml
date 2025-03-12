@@ -13,3 +13,7 @@ spec:
       value: "Hello from the environment"
     - name: DEMO_FAREWELL
       value: "Such a sweet sorrow"
+
+# Values in k8s if it is string, then quotes are nto mandatory. but if it is a integer then it is must.
+
+
