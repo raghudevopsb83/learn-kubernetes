@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx
+        image: nginx:1.20
 ---
 apiVersion: v1
 kind: Pod
@@ -30,4 +30,4 @@ metadata:
 spec:
   containers:
     - name: nginx
-      image: nginx:1.20
+      image: nginx
