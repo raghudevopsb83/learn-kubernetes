@@ -4,15 +4,15 @@ kind: ConfigMap
 metadata:
   name: frontend
 data:
-  CATALOGUE_HOST: localhost
+  CATALOGUE_HOST: "localhost"
   CATALOGUE_PORT: "8080"
-  USER_HOST: localhost
+  USER_HOST: "localhost"
   USER_PORT: "8080"
-  CART_HOST: localhost
+  CART_HOST: "localhost"
   CART_PORT: "8080"
-  SHIPPING_HOST: localhost
+  SHIPPING_HOST: "localhost"
   SHIPPING_PORT: "8080"
-  PAYMENT_HOST: localhost
+  PAYMENT_HOST: "localhost"
   PAYMENT_PORT: "8080"
 
 ---
@@ -36,8 +36,14 @@ spec:
         envFrom:
           - configMapRef:
               name: frontend
-
-
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: catalogue
+data:
+  MONGO: "true"
+  MONGO_URL: "mongodb://mongodb-dev.rdevopsb83.online:27017/catalogue"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -56,6 +62,19 @@ spec:
       containers:
       - name: catalogue
         image: public.ecr.aws/w8x4g9h7/roboshop-v3/catalogue
+        envFrom:
+          - configMapRef:
+              name: catalogue
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cart
+data:
+  CATALOGUE_HOST: "localhost"
+  CATALOGUE_PORT: "8080"
+  REDIS_HOST: "redis-dev.rdevopsb83.online"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -74,6 +93,18 @@ spec:
       containers:
       - name: cart
         image: public.ecr.aws/w8x4g9h7/roboshop-v3/cart
+        envFrom:
+          - configMapRef:
+              name: cart
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shipping
+data:
+  CART_ENDPOINT: "localhost:8080"
+  DB_HOST: "mysql-dev.rdevopsb83.online"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -92,6 +123,22 @@ spec:
       containers:
       - name: shipping
         image: public.ecr.aws/w8x4g9h7/roboshop-v3/shipping
+        envFrom:
+          - configMapRef:
+              name: shipping
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: payment
+data:
+  CART_HOST: "localhost"
+  CART_PORT: "8080"
+  USER_HOST: "localhost"
+  USER_PORT: "8080"
+  AMQP_HOST: "rabbitmq-dev.rdevopsb83.online"
+  AMQP_USER: "roboshop"
+  AMQP_PASS: "roboshop123"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -110,7 +157,41 @@ spec:
       containers:
       - name: payment
         image: public.ecr.aws/w8x4g9h7/roboshop-v3/payment
+        envFrom:
+          - configMapRef:
+              name: payment
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: user
+data:
+  MONGO: "true"
+  MONGO_URL: "mongodb://mongodb-dev.rdevopsb83.online:27017/users"
+  REDIS_URL: "redis://redis-dev.rdevopsb83.online:6379"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: user
+  template:
+    metadata:
+      labels:
+        component: user
+    spec:
+      containers:
+      - name: payment
+        image: public.ecr.aws/w8x4g9h7/roboshop-v3/user
+        envFrom:
+          - configMapRef:
+              name: user
+---
+
 
 
 
