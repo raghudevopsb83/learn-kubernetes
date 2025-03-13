@@ -352,7 +352,7 @@ spec:
           - name: DB_USER
             value: root
           - name: DB_PASS
-            value: RoboSHop@1
+            value: RoboShop@1
       restartPolicy: Never
   backoffLimit: 4
 
@@ -379,7 +379,7 @@ spec:
           - name: DB_USER
             value: root
           - name: DB_PASS
-            value: RoboSHop@1
+            value: RoboShop@1
       restartPolicy: Never
   backoffLimit: 4
 
