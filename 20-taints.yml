@@ -17,6 +17,6 @@ spec:
       image: nginx
   tolerations:
   - key: "project"
-    operator: "Equals"
+    operator: "Equal"
     value: "roboshop"
     effect: "NoExecute"
