@@ -1,14 +1,14 @@
 {{- define "common.labels" }}
-  labels:
-    appName: {{ .Values.component }}
-    project: roboshop
-    tower: retail
+  appName: {{ .Values.component }}
+  project: roboshop
+  tower: retail
 {{- end }}
 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.component }}
+  labels:
   {{- template "common.labels" }}
 spec:
   replicas: 1
