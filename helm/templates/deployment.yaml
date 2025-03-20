@@ -1,3 +1,10 @@
+{{- define "common.labels" }}
+  labels:
+    appName: {{ .Values.component }}
+    project: roboshop
+    tower: retail
+{{- end }}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
