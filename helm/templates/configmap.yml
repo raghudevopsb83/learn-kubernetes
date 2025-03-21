@@ -13,7 +13,7 @@ data:
   kubernetes-version: {{ .Capabilities.KubeVersion.Minor }}
   filename: {{ .Template.Name }}
   x: {{ .Values.x }}
-
+  env: {{ .Values.env }}
 
 
 #
