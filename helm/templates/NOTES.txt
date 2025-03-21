@@ -13,8 +13,8 @@ trainer: {{ .trainer | quote }}
 {{- end }}
 
 
-{{ range .Values.course }}
-.
+{{ range $k, $v :=  .Values.course }}
+$k
 {{ end }}
 
 
