@@ -5,4 +5,4 @@ We have installed the following YAML files in Cluster
 {{ $v }}
 {{- end }}
 
-(lookup "v1" "Service" "default" "kubernetes").spec.clusterIP
+{{(lookup "v1" "Service" "default" "kubernetes").spec.clusterIP}}
