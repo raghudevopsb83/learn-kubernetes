@@ -16,9 +16,11 @@ data:
   env: {{ .Values.env }}
   drink: {{ .Values.drink | default (printf "%s-tea" "Hello") }}
   pods: |
-    {{ range $index, $service := (lookup "v1" "Service" "" "").items }}
-        x
-    {{ end }}
+    {{- if (lookup "policy/v1beta1" "PodSecurityPolicy" "" "example") }}
+      "yes"
+    {{ else }}
+      "not"
+    {{- end }}
 
 
 #
