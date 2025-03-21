@@ -9,7 +9,7 @@ trainer: {{ .trainer | quote }}
 {{- end }}
 
 
-{{ range $k, $v :=  .Values.course }}
+{{- range $k, $v :=  .Values.course }}
 {{ $k }} : {{ $v }}
 {{ end }}
 

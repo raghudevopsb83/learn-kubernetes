@@ -8,7 +8,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-configmap
-  {{- template "mychart.labels" | indent 2 }}
+  {{- template "mychart.labels" }}
 data:
   myvalue: "Hello World"
   {{- range $key, $val := .Values.favorite }}
