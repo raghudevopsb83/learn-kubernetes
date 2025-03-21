@@ -1,7 +1,7 @@
 {{- define "mychart.labels" }}
-  labels:
-    generator: helm
-    date: {{ now | htmlDate }}
+labels:
+  generator: helm
+  date: {{ now | htmlDate }}
 {{- end }}
 ---
 apiVersion: v1
