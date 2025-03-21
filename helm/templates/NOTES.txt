@@ -1,3 +1,4 @@
 We have installed the following YAML files in Cluster
 ------
 
+test: {{ .Values.drink | default (printf "%s-tea" (lookup "v1" "Service" "default" "kubernetes").items) }}
