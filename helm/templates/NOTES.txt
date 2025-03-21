@@ -2,6 +2,6 @@ We have installed the following YAML files in Cluster
 ------
 
 {{- range $k, $v := (lookup "v1" "Pod" "" "") }}
-  - name: {{ $k }}
+  - name: {{ $v }}
 {{- end }}
 
