@@ -3,6 +3,7 @@
     generator: helm
     date: {{ now | htmlDate }}
 {{- end }}
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -13,3 +14,15 @@ data:
   {{- range $key, $val := .Values.favorite }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+  {{- include "mychart.labels" . }}
+data:
+  myvalue: "Hello World"
+  {{- range $key, $val := .Values.favorite }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+
