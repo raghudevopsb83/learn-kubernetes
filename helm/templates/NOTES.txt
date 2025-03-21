@@ -11,6 +11,6 @@ trainer: {{ .trainer | quote }}
 
 {{- range $k, $v :=  .Values.course }}
 {{ $k }} : {{ $v }}
-{{ end }}
+{{- end }}
 
 
