@@ -9,7 +9,7 @@ data:
   chart-version: {{ .Chart.Version }}
   file-size: {{ .Files.GetBytes "test.txt" }}
   file-content: |
-    {{ .Files.Get "test.txt" }}
+    {{ .Files.Get "test.txt" | indent 6}}
 #
 
 
