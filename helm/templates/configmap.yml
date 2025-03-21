@@ -14,6 +14,7 @@ data:
   filename: {{ .Template.Name }}
   x: {{ quote .Values.x }}
   env: {{ .Values.env }}
+  drink: {{ .Values.favorite.drink | default (printf "%s-tea" (include "fullname" .)) }}
 
 
 #
