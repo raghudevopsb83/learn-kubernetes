@@ -1,3 +1,4 @@
 FROM            redhat/ubi9
-ENTRYPOINT      ["bash", "run.sh"]
+COPY            run.sh /
+ENTRYPOINT      ["bash", "/run.sh"]
 CMD             ["ls"]
