@@ -4,9 +4,13 @@ metadata:
   name: ingress-example
   namespace: default
   annotations:
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: letsencrypt
 spec:
   ingressClassName: nginx
+  tls:
+  - hosts:
+    - frontend-dev2.rdevopsb83.online
+    secretName: secret-tls
   rules:
   - host: frontend-dev2.rdevopsb83.online
     http:
