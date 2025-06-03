@@ -85,7 +85,17 @@ spec:
 apiVersion: security.istio.io/v1
 kind: PeerAuthentication
 metadata:
-  name: {{ .Values.component_name }}
+  name: ex1
+  namespace: example1
+spec:
+  mtls:
+    mode: STRICT
+---
+apiVersion: security.istio.io/v1
+kind: PeerAuthentication
+metadata:
+  name: ex2
+  namespace: example2
 spec:
   mtls:
     mode: STRICT
