@@ -1,0 +1,96 @@
+apiVersion: v1
+kind: NameSpace
+metadata:
+  name: example1
+  labels:
+    istio-injection: enabled
+---
+apiVersion: v1
+kind: NameSpace
+metadata:
+  name: example2
+  labels:
+    istio-injection: enabled
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ex1-deploy
+  namespace: example1
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.24
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ex2-deploy
+  namespace: example2
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.24
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ex1
+  namespace: example1
+spec:
+  selector:
+    appName: nginx
+  ports:
+    - port: 80 # service port
+      targetPort: 80 # nginx pod port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ex2
+  namespace: example2
+spec:
+  selector:
+    appName: nginx
+  ports:
+    - port: 80 # service port
+      targetPort: 80 # nginx pod port
+---
+apiVersion: security.istio.io/v1
+kind: PeerAuthentication
+metadata:
+  name: {{ .Values.component_name }}
+spec:
+  mtls:
+    mode: STRICT
+
+
+
+
+
