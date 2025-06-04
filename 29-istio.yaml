@@ -87,11 +87,18 @@ spec:
     mode: PERMISSIVE
 ---
 apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: debug
+  namespace: default
+---
+apiVersion: v1
 kind: Pod
 metadata:
   name: debug
   namespace: default
 spec:
+  serviceAccountName: debug
   containers:
     - name: debug
       image: docker.io/rkalluru/learnk8s:rhel9-bare
