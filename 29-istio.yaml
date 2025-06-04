@@ -131,7 +131,3 @@ spec:
     - from:
         - source:
             namespaces: ["default"]
-      to:
-        - operation:
-            methods: ["GET"]
-            paths: ["*"]
