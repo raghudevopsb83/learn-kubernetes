@@ -113,12 +113,12 @@ spec:
     - name: debug
       image: docker.io/rkalluru/learnk8s:rhel9-bare
 ---
-apiVersion: security.istio.io/v1
-kind: AuthorizationPolicy
-metadata:
-  name: ex1
-  namespace: app
-spec: {}
+# apiVersion: security.istio.io/v1
+# kind: AuthorizationPolicy
+# metadata:
+#   name: ex1
+#   namespace: app
+# spec: {}
 ---
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
@@ -128,11 +128,10 @@ metadata:
 spec:
   action: ALLOW
   rules:
-  - from:
-    - source:
-        principals: ["cluster.local/ns/default/sa/default","cluster.local/ns/app/sa/default"]
-    to:
-    - operation:
-        methods: ["GET"]
-        paths: ["*"]
-
+    - from:
+        - source:
+            namespaces: ["default"]
+      to:
+        - operation:
+            methods: ["GET"]
+            paths: ["*"]
