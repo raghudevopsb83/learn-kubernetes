@@ -130,7 +130,7 @@ spec:
   rules:
   - from:
     - source:
-        principals: ["cluster.local/ns/default/sa/default","cluster.local/ns/app/sa/default"]
+        principals: ["cluster.local/ns/default/sa/debug","cluster.local/ns/app/sa/default"]
     to:
     - operation:
         methods: ["GET"]
