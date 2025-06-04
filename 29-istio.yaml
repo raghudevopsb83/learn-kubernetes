@@ -129,10 +129,10 @@ spec:
   action: ALLOW
   rules:
   - from:
-    - source:
-        principals: ["cluster.local/ns/default/sa/default"]
-    to:
-    - operation:
-        methods: ["GET"]
-        paths: ["*"]
+    - source: {}
+#         principals: ["cluster.local/ns/default/sa/default"]
+#     to:
+#     - operation:
+#         methods: ["GET"]
+#         paths: ["*"]
 
