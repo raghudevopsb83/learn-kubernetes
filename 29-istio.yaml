@@ -110,14 +110,14 @@ apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
   name: ex1
-  namespace: example1
+  namespace: app
 spec: {}
 ---
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
   name: ex1-allow
-  namespace: example1
+  namespace: app
 spec:
   action: ALLOW
   rules:
