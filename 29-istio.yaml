@@ -1,0 +1,131 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ex1-deploy
+  namespace: default
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  replicas: 1
+  selector:
+    matchLabels:
+      appName: nginx
+  template:
+    metadata:
+      labels:
+        appName: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.24
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ex2-deploy
+  namespace: app
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  replicas: 1
+  selector:
+    matchLabels:
+      appName: nginx
+  template:
+    metadata:
+      labels:
+        appName: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.24
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ex1
+  namespace: default
+spec:
+  selector:
+    appName: nginx
+  ports:
+    - port: 80 # service port
+      targetPort: 80 # nginx pod port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ex2
+  namespace: app
+spec:
+  selector:
+    appName: nginx
+  ports:
+    - port: 80 # service port
+      targetPort: 80 # nginx pod port
+---
+apiVersion: security.istio.io/v1
+kind: PeerAuthentication
+metadata:
+  name: ex1
+  namespace: default
+spec:
+  mtls:
+    mode: STRICT
+---
+apiVersion: security.istio.io/v1
+kind: PeerAuthentication
+metadata:
+  name: ex2
+  namespace: app
+spec:
+  mtls:
+    mode: STRICT
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: debug
+  namespace: default
+spec:
+  containers:
+    - name: debug
+      image: docker.io/rkalluru/learnk8s:rhel9-bare
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: debug
+  namespace: app
+spec:
+  containers:
+    - name: debug
+      image: docker.io/rkalluru/learnk8s:rhel9-bare
+---
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: ex1
+  namespace: example1
+spec: {}
+---
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: ex1-allow
+  namespace: example1
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/default/sa/default"]
+    to:
+    - operation:
+        methods: ["GET"]
+        paths: ["*"]
+
